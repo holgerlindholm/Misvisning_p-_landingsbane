@@ -2,16 +2,11 @@ import time
 import datetime
 import board
 import adafruit_ads1x15.ads1115 as ADS 
-import math
 from adafruit_ads1x15.analog_in import AnalogIn
 import busio
 
-import serial
-global ser
 import os 
 
-import schedule
-import pandas as pd
 from pynput import keyboard
 from csv import writer
 
@@ -26,7 +21,8 @@ ads = ADS.ADS1115(i2c)
 chan = AnalogIn(ads, ADS.P0)
 chan1 = AnalogIn(ads,ADS.P1)
 chan2 = AnalogIn(ads,ADS.P2)
-    
+
+#laver mappe og fil med timestamp
 path = "/media/magneten/KINGSTON/MAG{}".format(time.strftime('%Y%m%d-%H%M%S'))
 os.mkdir(path)
 magfile = open(path+"/magdata.csv","w")
@@ -37,7 +33,8 @@ with open(path+"/magdata.csv","a", newline='') as magnet_fil:
     writer_object = writer(magnet_fil)
     writer_object.writerow(magnet_header)  
     magnet_fil.close()
-    
+
+#Komverteringsværdier baseret på målinger gennem kredsløbet   
 def voltage_conversion_x(voltage):
     return(voltage*3.9851-8.2431)
     
@@ -46,8 +43,7 @@ def voltage_conversion_y(voltage):
     
 def voltage_conversion_z(voltage):
     return(voltage*3.9841-8.247)
-    
-        
+         
 def convert_to_tesla(voltage):
     return (voltage*90/8)
     
@@ -70,19 +66,16 @@ def magnet():
         # Close the file object
         magnet_fil.close()
 
+#----------------------------------#
+#Denne del af scriptet bruges kun, når det køres som test. Loopet stopper, når man trykker "enter"
 def on_press(key):
     if key==keyboard.Key.enter:
         print("stop")
-        file = pd.DataFrame(data=magnetdata)
-        file.to_csv(path+"/data_{}.csv".format(time.strftime('%Y%m%d-%H%M%S')),mode="a",float_format="%.6f",header=False,index=0)
         return False  # stop the listener
      
-
-
 with keyboard.Listener(on_press=on_press) as listener: #Stops script on enter
     while True:
         magnet()
-        #print("..")
         # this will block until the Enter key is pressed or the listener is stopped
         if not listener.running:
             break  # exit the loop
