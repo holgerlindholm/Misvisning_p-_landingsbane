@@ -1,10 +1,8 @@
 import time
 import datetime
 from picamera2 import Picamera2
-
 import os 
 import schedule
-
 from pynput import keyboard
 
 # Initialiser PiCamera
@@ -13,7 +11,6 @@ picam2 = Picamera2()
 # Her kan du ændre resoulution 
 config = picam2.create_still_configuration({"size": (4056, 3040)})
 
-
 # Starter kamerater op
 picam2.configure(config)
 picam2.start()
@@ -21,7 +18,6 @@ picam2.start()
 path = "/media/magneten/KINGSTON/BILLEDE{}".format(time.strftime('%Y%m%d-%H%M%S'))
 os.mkdir(path)
 os.mkdir(path+"/billeder/")
-
 
 def tagbillede():
    # Generer filnavn baseret på tidspunktet for billedet
@@ -33,13 +29,11 @@ def tagbillede():
    billedetid.write(str(datetime.datetime.now())+"\n")
    billedetid.flush()
    
-
 def on_press(key):
     if key==keyboard.Key.enter:
         print("stop")
         return False  # stop the listener
     
-
 schedule.every(0.5).seconds.do(tagbillede)
 
 billedetid = open(path+"/tider_{}.txt".format(time.strftime('%Y%m%d-%H%M%S')),"w")
@@ -52,7 +46,6 @@ with keyboard.Listener(on_press=on_press) as listener:
         # this will block until the Enter key is pressed or the listener is stopped
         if not listener.running:
             break  # exit the loop
-
 
 # Stop PiCamera2
 picam2.close()
