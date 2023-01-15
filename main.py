@@ -33,7 +33,7 @@ while True: #Main loop
     #'state' vil have en længde på 1, når LED'en er tændt
     if len(state) == 1: 
         #Kører de tre scripts når man har trykket på knappen
-        sub = subprocess.Popen(["python3","/home/magneten/Desktop/Scripts/BIRDBRAIN.py"])
+        sub = subprocess.Popen(["python3","/home/magneten/Desktop/Scripts/magnetometer.py"])
         sub2 = subprocess.Popen(["python3","/home/magneten/Desktop/Scripts/gps.py"])
         sub3 = subprocess.Popen(["python3","/home/magneten/Desktop/Scripts/tagbillede.py"])
         state.extend([1]) #'state' forlænges en gang igen
