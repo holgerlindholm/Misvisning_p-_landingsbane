@@ -26,7 +26,13 @@ I dette tilfælde hedder brugeren "magneten" og filen hedder "main.py"
 ####
 
 ### Kamera
-
+For at kameraet virker skal raspberry konfigureres:
+1. Skriv følgende i terminal
+  ```sh
+sudo raspi-config
+  ```
+2. Tryk på interface og slå "legacy camera mode" fra
+3.  ```sudo reboot ```
 ### Elektrisk kredsløb
 <p align="center">
   <img src="assets/kredsløb.png" height=500>
