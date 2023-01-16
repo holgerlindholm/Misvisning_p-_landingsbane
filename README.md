@@ -1,4 +1,8 @@
 # Misvisning på landingsbane
+<p align="center">
+  <img src="assets/bird.png" height=300>
+</p>
+
 
 ### Scripts
 **main.py** kører on boot og styrer følgende scripts:
