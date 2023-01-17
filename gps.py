@@ -11,7 +11,7 @@ from pynput import keyboard
 #Der laves en global variabel som benyttes til serialporten:
 global ser
 
-#Der laves en ny mappe med en bestemt path, hvor dataet gemmes i:
+#Der laves en ny mappe med en bestemt tidsbaseret path, hvor dataet gemmes i:
 path = "/media/magneten/KINGSTON/GPS{}".format(time.strftime('%Y%m%d-%H%M%S'))
 os.mkdir(path)
 
@@ -31,7 +31,7 @@ tidsfil = open(path+"/IMUtid.txt","w")
 def on_press(key):
     if key==keyboard.Key.enter:
         print("stop")
-        return False  # stop the listener
+        return False  #Stopper 'listener' nede i while loopet
 
 #Funktion til at logge tiden.
 def write_time():
@@ -46,13 +46,14 @@ with keyboard.Listener(on_press=on_press) as listener:
         #Der læses data fra IMU'en
         mchar = ser.read()
         file.write(mchar)
+        # .flush() er en nyttig kommando, da datafilen hele tiden opdateres i et uendeligt while loop - kan ellers ikke lukke filen.
         file.flush()
         schedule.run_pending()
         
         
-        # this will block until the Enter key is pressed or the listener is stopped
+        #Vil stoppe scriptet når 'enter' trykkes (nyttigt til tests)
         if not listener.running:
-            break  # exit the loop
+            break  #Forlader loopet
 
 
 print("FINISH")
