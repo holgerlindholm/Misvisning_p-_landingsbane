@@ -23,7 +23,7 @@ def tagbillede():
    # Generer filnavn baseret på tidspunktet for billedet
    filename = 'image_{}.jpg'.format(time.strftime('%Y%m%d-%H%M%S'))
 
-   # Tag et billede og gem det med det genererede filnavn. (Hvis den ikke virker, så prøv den kommando under, ved at fjerne "#", og så sætte det foran den den nuværende hvis den ik virker)
+   # Tag et billede og gem det med det genererede filnavn.
    picam2.capture_file(path+"/billeder/" + filename)
    print("Picture taken at ",datetime.datetime.now())
    billedetid.write(str(datetime.datetime.now())+"\n")
