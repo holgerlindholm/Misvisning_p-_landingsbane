@@ -46,12 +46,12 @@ with keyboard.Listener(on_press=on_press) as listener:
         #Der læses data fra IMU'en
         mchar = ser.read()
         file.write(mchar)
-        # .flush() er en nyttig kommando, da datafilen hele tiden opdateres i et uendeligt while loop - kan ellers ikke lukke filen.
+        # .flush() er en nyttig kommando, da datafilen hele tiden opdateres i et uendeligt while loop - filen kan ellers ikke lukkes.
         file.flush()
         schedule.run_pending()
         
         
-        #Vil stoppe scriptet når 'enter' trykkes (nyttigt til tests)
+        #Vil stoppe scriptet når 'enter' trykkes eller når 'listener' stoppes (nyttigt til tests)
         if not listener.running:
             break  #Forlader loopet
 
